@@ -1,0 +1,140 @@
+apig-test --username test@test.com --password totoro123 --user-pool-id us-east-1_wD7hZ8LH1 --app-client-id 7pnne527h6quf5bvjditafaick --cognito-region us-east-1 --identity-pool-id us-east-1:11702199-50da-42bf-a002-08c8d469c8cf --invoke-url https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod --api-gateway-region us-east-1 --path-template /notes --method=POST --body "{\"content\":\"hello world\",\"attachment\":\"hello.jpg\"}"
+apig-test --username admin@example.com --password Passw0rd! --user-pool-id YOUR_COGNITO_USER_POOL_ID --app-client-id YOUR_COGNITO_APP_CLIENT_ID --cognito-region YOUR_COGNITO_REGION --identity-pool-id YOUR_IDENTITY_POOL_ID --invoke-url YOUR_API_GATEWAY_URL --api-gateway-region YOUR_API_GATEWAY_REGION --path-template /notes --method POST --body "{\"content\":\"hello world\",\"attachment\":\"hello.jpg\"}"
+
+AKIAIRRWH6FUPOP5ADNA
+2lQ0HEn5/YHYcwlMVk9qPIvu2jXTyvGETamUpmB1
+
+Amazon S3 notez-app-uploads
+
+pool-id: us-east-1_wD7hZ8LH1
+pool arn: arn:aws:cognito-idp:us-east-1:469576448628:userpool/us-east-1_wD7hZ8LH1
+app client id: 7pnne527h6quf5bvjditafaick
+
+https://notez-app.auth.us-east-1.amazoncognito.com
+
+Identity pool ID 
+us-east-1:11702199-50da-42bf-a002-08c8d469c8cf (Show ARN)
+
+
+{
+    "UserConfirmed": false,
+    "CodeDeliveryDetails": {
+        "Destination": "t***@t***.com",
+        "DeliveryMedium": "EMAIL",
+        "AttributeName": "email"
+    },
+    "UserSub": "d246f56f-0b34-4be2-af11-c186fcb93319"
+}
+
+aws cognito-idp sign-up --region us-east-1 --client-id 7pnne527h6quf5bvjditafaick --username test@test.com --password totoro123
+aws cognito-idp admin-confirm-sign-up --region us-east-1 --user-pool-id us-east-1_wD7hZ8LH1 --username test@test.com
+
+
+C:\Users\wanag\Work\notes-app-api>serverless invoke local --function create --path mocks/create-event.json
+Serverless: Bundling with Webpack...
+Time: 2303ms
+    Asset  Size  Chunks             Chunk Names
+create.js  5 kB       0  [emitted]  create
+   [0] ./create.js 2.16 kB {0} [built]
+   [1] external "babel-runtime/core-js/json/stringify" 42 bytes {0} [not cacheable]
+   [2] external "uuid" 42 bytes {0} [not cacheable]
+   [3] external "aws-sdk" 42 bytes {0} [not cacheable]
+{
+    "statusCode": 200,
+    "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    },
+    "body": "{\"userId\":\"USER-SUB-1234\",\"noteId\":\"cad53280-0e37-11e8-aef5-d76f9248f2ec\",\"content\":\"hello world\",\"attachment\":\"hello.jpg\",\"createdAt\":1518249342376}"
+}
+
+
+C:\Users\wanag\Work\notes-app-api>serverless invoke local --function get --path mocks/get-event.json
+Serverless: Bundling with Webpack...
+Time: 1176ms
+ Asset     Size  Chunks             Chunk Names
+get.js  6.88 kB       0  [emitted]  get
+   [0] ./get.js 2.59 kB {0} [built]
+   [1] external "babel-runtime/regenerator" 42 bytes {0} [not cacheable]
+   [2] external "babel-runtime/helpers/asyncToGenerator" 42 bytes {0} [not cacheable]
+   [3] ./libs/dynamodb-lib.js 485 bytes {0} [built]
+   [4] external "aws-sdk" 42 bytes {0} [not cacheable]
+   [5] ./libs/response-lib.js 721 bytes {0} [built]
+   [6] external "babel-runtime/core-js/json/stringify" 42 bytes {0} [not cacheable]
+{
+    "statusCode": 200,
+    "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    },
+    "body": "{\"attachment\":\"hello.jpg\",\"content\":\"hello world\",\"createdAt\":1518249342376,\"noteId\":\"cad53280-0e37-11e8-aef5-d76f9248f2ec\",\"userId\":\"USER-SUB-1234\"}"
+}
+
+C:\Users\wanag\Work\notes-app-api>serverless invoke local --function list --path mocks/list-event.json
+Serverless: Bundling with Webpack...
+Time: 1373ms
+  Asset     Size  Chunks             Chunk Names
+list.js  6.95 kB       0  [emitted]  list
+   [0] ./list.js 2.66 kB {0} [built]
+   [1] external "babel-runtime/regenerator" 42 bytes {0} [not cacheable]
+   [2] external "babel-runtime/helpers/asyncToGenerator" 42 bytes {0} [not cacheable]
+   [3] ./libs/dynamodb-lib.js 485 bytes {0} [built]
+   [4] external "aws-sdk" 42 bytes {0} [not cacheable]
+   [5] ./libs/response-lib.js 721 bytes {0} [built]
+   [6] external "babel-runtime/core-js/json/stringify" 42 bytes {0} [not cacheable]
+{
+    "statusCode": 200,
+    "headers": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    },
+    "body": "[{\"attachment\":\"hello.jpg\",\"content\":\"hello world\",\"createdAt\":1518249342376,\"noteId\":\"cad53280-0e37-11e8-aef5-d76f9248f2ec\",\"userId\":\"USER-SUB-1234\"}]"
+}
+
+serverless deploy function -f list
+
+
+Service Information
+service: notes-app-api
+stage: prod
+region: us-east-1
+stack: notes-app-api-prod
+api keys:
+  None
+endpoints:
+  POST - https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod/notes
+  GET - https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod/notes/{id}
+  GET - https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod/notes
+  PUT - https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod/notes/{id}
+  DELETE - https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod/notes/{id}
+functions:
+  create: notes-app-api-prod-create
+  get: notes-app-api-prod-get
+  list: notes-app-api-prod-list
+  update: notes-app-api-prod-update
+  delete: notes-app-api-prod-delete
+
+
+C:\Users\wanag\Work\notes-app-api>apig-test --username test@test.com --password totoro123 --user-pool-id us-east-1_wD7hZ8LH1 --app-client-id 7pnne527h6quf5bvjditafaick --cognito-region us-east-1 --identity-pool-id us-east-1:11702199-50da-42bf-a002-08c8d469c8cf --invoke-url https://5jts0d2x3g.execute-api.us-east-1.amazonaws.com/prod --api-gateway-region us-east-1 --path-template /notes --method=POST --body "{\"content\":\"hello world\",\"attachment\":\"hello.jpg\"}"
+Authenticating with User Pool
+Getting temporary credentials
+Making API request
+{ status: 200,
+  statusText: 'OK',
+  data:
+   { userId: 'us-east-1:33d82959-7fb7-40b5-b995-a101c49df00d',
+     noteId: 'f0667d90-0e3e-11e8-8109-6bcff527ce16',
+     content: 'hello world',
+     attachment: 'hello.jpg',
+     createdAt: 1518252411882 } }
+
+https://notez-app-uploads.s3.amazonaws.com/us-east-1%3A3f905c38-be01-497b-8914-01cf1d8d9bbf-1518301692113-Screenshot%20%281%29.png
+
+Endpoint : http://notez-app-client.s3-website-us-east-1.amazonaws.com
+
+Distribution ID	E9GXJ9DQBP7NI
+ARN	arn:aws:cloudfront::469576448628:distribution/E9GXJ9DQBP7NI
+
+cloudfront id:
+E9GXJ9DQBP7NI
+aws cloudfront create-invalidation --distribution-id E9GXJ9DQBP7NI --paths "/*"
